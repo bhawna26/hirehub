@@ -19,7 +19,7 @@ app.use(methodOverride('_method'));
 let jobRoutes = require('./routes/index.js');
 app.use(jobRoutes);
 
-app.listen(8000, function() {
+app.listen(4000, function() {
 	console.log('server started on port 1000');
 });
 

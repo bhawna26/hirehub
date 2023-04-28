@@ -66,6 +66,7 @@ router.get('/jobs/:id/edit', async function(req, res) {
 // update
 router.patch('/jobs/:id', async function(req, res) {
 	try {
+    //this time we are not creating a DB object.we are just creating a JS object.
 		let id = req.params.id;
 		let updatedJob = {
 			name: req.body.name,
