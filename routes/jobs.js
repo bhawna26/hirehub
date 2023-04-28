@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 // model
 let Job = require('../models/jobsDB');
+let Notification=require('../models/notifyDB')
 
 router.get('/', function(req, res) {
 	res.render('landing');
@@ -33,6 +34,12 @@ router.post('/jobs', async function(req, res) {
 			image: req.body.image
 		});
 		await newJob.save();
+		//push a new notification after creation of job
+		let newNotify=new Notification({
+			body:'A new job has been posted',
+			author:newJob.name
+		})
+		await newNotify.save();
 		res.redirect('/jobs');
 	} catch (error) {
 		console.log('error while adding a new job', error);
@@ -71,9 +78,18 @@ router.patch('/jobs/:id', async function(req, res) {
 		let updatedJob = {
 			name: req.body.name,
 			address: req.body.address,
-			image: req.body.image
+			image: req.body.image,
+      package:req.body.package,
+      cgpa:req.body.cgpa,
+      deadline: req.body.deadline,
+			type: req.body.type
 		};
 		await Job.findByIdAndUpdate(id, updatedJob);
+		//push a new notification after updation of job
+		let newNotify=new Notification({
+			body:'A new job has been updated',
+			author:updatedJob.name
+		})
 		res.redirect(`/jobs/${id}`);
 	} catch (error) {
 		console.log('error while updating the job', error);

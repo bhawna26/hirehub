@@ -1,11 +1,22 @@
 let mongoose=require('mongoose');
 
 let jobSchema=new mongoose.Schema({
-  name:String,
+  name: {
+		type: String,
+		required: true
+	},
   address:String,
   image: String,
 	package: Number,
-	description: String
+  cgpa: Number,
+	deadline: {
+		type: Date,
+		default: Date.now
+	},
+	type: {
+		type: String,
+		default: 'fulltime'
+	}
 });
 
 //Creating model.It's first letter is always capital.It takes collection name as first arg.
