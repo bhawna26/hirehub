@@ -16,7 +16,13 @@ let jobSchema=new mongoose.Schema({
 	type: {
 		type: String,
 		default: 'fulltime'
-	}
+	},
+	appliedUsers: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'user'
+		}
+	]
 });
 
 //Creating model.It's first letter is always capital.It takes collection name as first arg.

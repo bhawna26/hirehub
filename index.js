@@ -37,6 +37,10 @@ passport.deserializeUser(User.deserializeUser());
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+app.use(function(req, res, next) {
+	res.locals.currentUser = req.user;
+	next();
+});
 
 let jobRoutes = require('./routes/jobs.js');
 let notifRoutes = require('./routes/notifications');
@@ -46,8 +50,8 @@ app.use(jobRoutes);
 app.use(notifRoutes);
 app.use(authRoutes);
 
-app.listen(4000, function() {
-	console.log('server started on port 4000');
+app.listen(3000, function() {
+	console.log('server started on port 3000');
 });
 
 
