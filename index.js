@@ -4,6 +4,7 @@ let methodOverride = require('method-override');
 let session = require('express-session');
 let passport = require('passport');
 let localStrategy = require('passport-local');
+let moment = require('moment');
 let app = express();
 
 mongoose
@@ -39,16 +40,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(function(req, res, next) {
 	res.locals.currentUser = req.user;
-	next();
+	res.locals.moment = moment;
+  next();
 });
 
 let jobRoutes = require('./routes/jobs.js');
 let notifRoutes = require('./routes/notifications');
 let authRoutes = require('./routes/auth');
+let questionRoutes=require('./routes/questions');
 
 app.use(jobRoutes);
 app.use(notifRoutes);
 app.use(authRoutes);
+app.use(questionRoutes);
 
 app.listen(3000, function() {
 	console.log('server started on port 3000');
